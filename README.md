@@ -78,7 +78,7 @@ FullCalendarを導入し、自身の診断結果を元に1時間区切りで予�
 〜本リリース時に実装したい追加機能〜
 
 ・ユーザー登録・ログイン
-LINE連携機能（初回の予定表を作成し、保存する段階で）
+ユーザー名、メールアドレス、パスワード
 
 ・判定結果提示機能
 Xでポストをしたら詳しい判定結果が見れるようにする。
@@ -88,8 +88,7 @@ Xでポストをしたら詳しい判定結果が見れるようにする。
 設定した予定を繰り返し使用するか、曜日指定で使用するかなどを選択できるようにする。
 自身が作った予定に詳細機能を搭載し、その時間でやりたいことを箇条書きでメモできるようにする。
 
-・予定に合わせた通知機能
-起きる時間に設定された時間や寝る時間にLINEを通じてプッシュ通知を送る。
+
 
 ⚪︎機能の実装方針予定
 
@@ -98,9 +97,9 @@ Xでポストをしたら詳しい判定結果が見れるようにする。
 ・診断機能
 ・Xへの投稿機能
 ・FullCalendar
-・LINE Messaging API
 
+⚪︎画面遷移図
+<https://www.figma.com/design/HAm88570dYq9KUBaLHGet8/%E3%82%AF%E3%83%AD%E3%83%8E%E3%82%BF%E3%82%A4%E3%83%97%E3%80%80%E7%94%BB%E9%9D%A2%E6%8E%A8%E7%A7%BB%E5%9B%B3%E6%A1%88?node-id=0-1&p=f&t=0lGbawQIpqlPO72c-0>
 ⚪︎本サービスを作成するにあたって参考にした文献
 ・マイケル・ブレウス.訳 長谷川 圭.The Power of When Discover Your Chronotype 最良の効果を得るタイミング.パンローリング株式会社 2020年初版
 ・マイケル・ブレウス .SLEEP QUIZ.SLEEP DOCTOR https://shop.sleepdoctor.com/pages/at-home-sleep-apnea-test?_gl=1*9kt6ff*_gcl_au*MTUxODM1NDU1MS4xNzM4OTI4NTAz
-・
