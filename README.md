@@ -103,10 +103,8 @@ Xでポストをしたら詳しい判定結果が見れるようにする。
 
 ⚪︎ER図
 （ER図のスクリーンショットの画像）
-[![Image from Gyazo](https://i.gyazo.com/752ae0732d9e37024b5e1e1ce432e8fa.png)](https://gyazo.com/752ae0732d9e37024b5e1e1ce432e8fa)
+[![Image from Gyazo](https://i.gyazo.com/e6968f923667a5f2cc173396cdeab754.png)](https://gyazo.com/e6968f923667a5f2cc173396cdeab754)
 MVPで実装する予定の機能
--[x]ログイン前の判定結果の一時保存 (temporary_user_answers)
-
 -[x]ユーザー登録機能（ユーザー名、メールアドレス、パスワード） (users)
 
 -[x]ログイン機能 (users)
