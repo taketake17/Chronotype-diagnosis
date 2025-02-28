@@ -67,7 +67,7 @@ YES/NOで答えられる10個の質問に回答してもらう。ここで「YES
 パート1・2の結果を元に判定結果を表示する。
 そこには自分が何型なのか・何時に起きて何時に寝るようにすべきか・最も集中できる時間帯はいつか・理想のスケジュールの例を提示する。
 
-クロノタイプに基づいた理想のスケジュールを作成するための条件として会員登録を必須とし、登録をしていない人は登録ページへと誘導する。
+クロノタイプに基づいたスケジュールを作成するための条件として会員登録を必須とし、登録をしていない人は登録ページへと誘導する。
 
 判定結果をXでポストできるアラートを出す。
 
@@ -100,6 +100,29 @@ Xでポストをしたら詳しい判定結果が見れるようにする。
 
 ⚪︎画面遷移図
 <https://www.figma.com/design/HAm88570dYq9KUBaLHGet8/%E3%82%AF%E3%83%AD%E3%83%8E%E3%82%BF%E3%82%A4%E3%83%97%E3%80%80%E7%94%BB%E9%9D%A2%E6%8E%A8%E7%A7%BB%E5%9B%B3%E6%A1%88?node-id=0-1&p=f&t=0lGbawQIpqlPO72c-0>
+
+⚪︎ER図
+（ER図のスクリーンショットの画像）
+[![Image from Gyazo](https://i.gyazo.com/e6968f923667a5f2cc173396cdeab754.png)](https://gyazo.com/e6968f923667a5f2cc173396cdeab754)
+MVPで実装する予定の機能
+-[x]ユーザー登録機能（ユーザー名、メールアドレス、パスワード） (users)
+
+-[x]ログイン機能 (users)
+
+-[x]クロノタイプ判定機能 (questions)
+
+-[x]選択結果と合計の保存(user_answers)
+
+-[x] クロノタイプ判定結果提示機能(user_chronotypes)
+
+-[x]判定されたクロノタイプの表示(user_chronotypes,chronotypes)
+
+-[x]クロノタイプに合わせたスケジュール例の提示 (default_schedules)
+
+-[x]タイムスケジュール表作成機能 (schedules)
+
+-[x]時間範囲指定による予定入力機能 (schedules)
+
 ⚪︎本サービスを作成するにあたって参考にした文献
 ・マイケル・ブレウス.訳 長谷川 圭.The Power of When Discover Your Chronotype 最良の効果を得るタイミング.パンローリング株式会社 2020年初版
 ・マイケル・ブレウス .SLEEP QUIZ.SLEEP DOCTOR https://shop.sleepdoctor.com/pages/at-home-sleep-apnea-test?_gl=1*9kt6ff*_gcl_au*MTUxODM1NDU1MS4xNzM4OTI4NTAz
