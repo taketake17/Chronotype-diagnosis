@@ -1,0 +1,2 @@
+class Chronotype < ApplicationRecord
+end
