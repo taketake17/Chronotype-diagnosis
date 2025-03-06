@@ -8,86 +8,21 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Question.create([
+Chronotype.create([
     {
-        question_text: "Q1.ささいな音や光で目を覚ましたり、眠れなくなってしまうことがある。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
+        name: "イルカ型",
+        description: "イルカ型は人口の10%程度しかいない少数のクロノタイプです。他のクロノタイプと比べて眠りが浅く、短い睡眠時間で活動することができます。"
     },
     {
-        question_text: "Q2.食べ物に対してこだわりや関心は全くない。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
+        name: "ライオン型",
+        description: "ライオン型は人口の15~20%程度で朝型に分類されるクロノタイプです。ライオンが夜明け前から活動するのと同じように、ライオン型の人も朝早くから活動することができます。"
     },
     {
-        question_text: "Q3.目覚ましが鳴る前に起きることが多い。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
+        name: "クマ型",
+        description: "クマ型は人口の50%程度で多くの人が分類されるクロノタイプです。太陽の動きに合わせた生活リズムを持ち、朝から活動をすることもできます。"
     },
     {
-        question_text: "Q4.耳栓やアイマスクをしても、飛行機や新幹線の中で寝ることができない。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q5.疲れるとイライラすることが多い。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q6.細いことが気になり過ぎてしまうことがある。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q7.医師の診断かもしくは自己診断で不眠症の結果が出たことがある。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q8.学校に通っていた頃、成績のことが心配で仕方がなかった。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q9.私は完璧主義である。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
-    },
-    {
-        question_text: "Q10.過去の出来事や将来のことを考え込み過ぎて眠れなくなることがよくある。",
-        option1: "YES",
-        option2: "NO",
-        score1: 1,
-        score2: 0,
-        part: 1
+        name: "オオカミ型",
+        description: "オオカミ型は人口の15~20%程度で夜型に分類されるクロノタイプです。夜にかけて集中力が増していき、夕方が最も集中して作業をすることができます。"
     }
-
 ])
