@@ -1,6 +1,6 @@
 class QuestionFirstController < ApplicationController
     def index
-      @questions = Question.all
+        @questions = Question.where(part: 1)
     end
 
     def create
