@@ -1,4 +1,12 @@
-<h1>あなたはクロノタイプのクマ型です！</h1>
-<p>クマ型の特徴やアドバイスについて詳しく説明します。</p>
-
-<%= link_to 'トップに戻る', root_path %>
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-green-200 to-green-600 text-center p-4">
+  <h1 class="text-4xl font-bold text-white mb-8">あなたのクロノタイプは・・・</h1>
+  <div class="flex justify-center items-center mb-8">
+    <%= image_tag 'kuma.png', class: "w-60 h-60 shadow-lg", alt: "クマ型" %>
+  </div>
+  <h2 class="text-3xl font-semibold text-white mb-6">クマ型です！</h2>
+  <p class="text-gray-200 text-lg mb-8 max-w-2xl">
+    <%= @message.description %>
+  </p>
+  <p class="text-gray-300 mb-4">詳しい内容を見たい方は・・・</p>
+  <%= link_to 'ボタンをクリック！', root_path, class: "bg-green-800 hover:bg-green-900 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 text-lg" %>
+</div>
