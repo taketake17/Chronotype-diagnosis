@@ -4,6 +4,13 @@
 <div class="flex justify-center">
   <h3 class="text-lg text-center">質問パート1では、「YES」か「NO」で答えられる質問を10問出題しますので、全て答えて次へのボタンを押して下さい。</h3>
 </div>
+
+<% if flash[:alert] %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <span class="block sm:inline"><%= flash[:alert] %></span>
+  </div>
+<% end %>
+
 <%= form_with model: @user_answer, url: question_first_index_path, local: true, method: :post, class: "max-w-3xl mx-auto p-4" do |f| %>
   <div class="space-y-8">
     <% @questions.each do |question| %>
@@ -11,11 +18,11 @@
         <h3 class="text-lg font-semibold mb-3"><%= question.question_text %></h3>
         <div class="space-y-6 pl-4">
           <div class="flex items-center">
-            <%= f.radio_button "answers[#{question.id}]", 1, id: "answers_#{question.id}_1", class: "form-radio h-4 w-4 text-blue-600" %>
+            <%= f.radio_button "answers[#{question.id}]", 1, id: "answers_#{question.id}_1", class: "form-radio h-4 w-4 text-blue-600", required: true %>
             <%= f.label "answers_#{question.id}_1", question.option1, class: "ml-2 text-sm" %>
           </div>
           <div class="flex items-center">
-            <%= f.radio_button "answers[#{question.id}]", 0, id: "answers_#{question.id}_0", class: "form-radio h-4 w-4 text-blue-600" %>
+            <%= f.radio_button "answers[#{question.id}]", 0, id: "answers_#{question.id}_0", class: "form-radio h-4 w-4 text-blue-600", required: true %>
             <%= f.label "answers_#{question.id}_0", question.option2, class: "ml-2 text-sm" %>
           </div>
         </div>
@@ -26,4 +33,3 @@
     <%= f.submit "結果を見る！", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
   </div>
 <% end %>
-
