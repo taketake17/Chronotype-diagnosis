@@ -26,10 +26,12 @@ class QuestionSecondController < ApplicationController
   private
 
   def filtered_answers
-    params.require(:answers).permit!.to_h
+    allowed_keys = Question.where(part: 2).pluck(:id).map(&:to_s)
+    params.require(:answers).permit(*allowed_keys).to_h
   rescue ActionController::ParameterMissing
     {}
   end
+
 
   def process_all_answers
     all_answers = session[:answers]
