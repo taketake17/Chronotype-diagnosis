@@ -25,7 +25,7 @@ class QuestionFirstController < ApplicationController
           chronotype_id: dolphin_chronotype.id,
           score: @total_score
         )
-        redirect_to dolphin_path
+        redirect_to chronotype_summary_dolphin_path
       else
         redirect_to question_second_path
       end

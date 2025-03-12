@@ -8,13 +8,19 @@ Rails.application.routes.draw do
   root "tops#index"
 
   resources :question_first
-  get "dolphin"=>"chronotype#dolphin"
   get "question_second"=>"question_second#index"
 
   resources :question_second
-  get "wolf"=>"chronotype#wolf"
-  get "bear"=>"chronotype#bear"
-  get "lion"=>"chronotype#lion"
+
+  get "chronotype/summary/bear"=>"chronotype#bear"
+  get "chronotype/summary/lion"=> "chronotype#lion"
+  get "chronotype/summary/wolf"=>"chronotype#wolf"
+  get "chronotype/summary/dolphin"=> "chronotype#dolphin"
+
+  get "chronotype/details/bear"=>"chronotype#details_bear"
+  get "chronotype/details/lion"=>"chronotype#details_lion"
+  get "chronotype/details/wolf"=>"chronotype#details_wolf"
+  get "chronotype/details/dolphin"=> "chronotype#details_dolphin"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
