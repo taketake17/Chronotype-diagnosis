@@ -87,10 +87,10 @@ class QuestionSecondController < ApplicationController
 
   def redirect_to_chronotype_path(chronotype_name)
     case chronotype_name
-    when "オオカミ型" then redirect_to wolf_path and return
-    when "クマ型" then redirect_to bear_path and return
-    when "ライオン型" then redirect_to lion_path and return
-    when "イルカ型" then redirect_to dolphin_path and return
+    when "オオカミ型" then redirect_to chronotype_summary_wolf_path and return
+    when "クマ型" then redirect_to chronotype_summary_bear_path and return
+    when "ライオン型" then redirect_to chronotype_summary_lion_path and return
+    when "イルカ型" then redirect_to chronotype_summary_dolphin_path and return
     else redirect_to question_second_path, alert: "クロノタイプが正しく判定できませんでした。"
     end
   end
