@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "tops" =>"tops#index"
   root "tops#index"
+  get "description" =>"tops#description"
 
   resources :question_first
   get "question_second"=>"question_second#index"
