@@ -1,4 +1,6 @@
 class ChronotypeController < ApplicationController
+    before_action :authenticate_user!
+
     def dolphin
         @message = Chronotype.find(1)
         render "chronotype/summary/dolphin"

@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get "users/show"
+  devise_for :users, controllers: { registrations: "users/registrations" }
   devise_scope :user do
     get "/users/sign_out" => "devise/sessions#destroy"
   end
+  resources :users, only: [ :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   get "tops" =>"tops#index"
   root "tops#index"

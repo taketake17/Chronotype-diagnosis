@@ -1,4 +1,6 @@
 class QuestionFirstController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @questions = Question.where(part: 1)
   end

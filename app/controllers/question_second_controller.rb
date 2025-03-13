@@ -1,4 +1,5 @@
 class QuestionSecondController < ApplicationController
+  before_action :authenticate_user!
   def index
     @questions = Question.where(part: 2).page(params[:page]).per(5)
     @total_questions = Question.where(part: 2).count
