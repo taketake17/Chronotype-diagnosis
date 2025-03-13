@@ -1,7 +1,8 @@
 require "test_helper"
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  skip "should get show" do
+  test "should get show" do
+    skip "Temporarily skipping this test"
     get users_show_url
     assert_response :success
   end
