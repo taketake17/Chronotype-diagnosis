@@ -1,1 +1,17 @@
 <div id="calendar"></div>
+
+<div id="eventForm" style="display: none; position: absolute; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc;">
+  <input type="text" id="eventName" placeholder="予定名">
+  <select id="startTime"></select>
+  <select id="endTime"></select>
+  <button id="saveEvent">保存</button>
+</div>
+
+<div id="eventDetailsForm" style="display: none; position: absolute; z-index: 1000; background: white; padding: 10px; border: 1px solid #ccc;">
+  <h3 id="eventDetailTitle"></h3>
+  <p>開始: <span id="eventDetailStart"></span></p>
+  <p>終了: <span id="eventDetailEnd"></span></p>
+  <button id="editEventButton">編集</button>
+  <button id="deleteEventButton">削除</button>
+</div>
+
