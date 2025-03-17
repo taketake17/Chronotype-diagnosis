@@ -2,11 +2,12 @@ import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from '@fullcalendar/timegrid';
 
-// グローバル変数として宣言
-let calendar; 
+let calendar;
 let selectedInfo = null;
 
-// 時間選択用のオプションを生成
+// CSRFトークンの取得
+const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 function generateTimeOptions() {
     const startTime = document.getElementById('startTime');
     const endTime = document.getElementById('endTime');
@@ -20,7 +21,6 @@ function generateTimeOptions() {
     }
 }
 
-// 保存ボタンがクリックされたときの処理
 function handleSaveEvent() {
     const eventName = document.getElementById('eventName').value;
     const selectedStartTime = document.getElementById('startTime').value;
@@ -30,35 +30,31 @@ function handleSaveEvent() {
       let startDate, endDate;
   
       if (selectedInfo.event) {
-        // 既存のイベントを編集する場合
         startDate = new Date(selectedInfo.event.start);
         endDate = new Date(selectedInfo.event.end);
       } else {
-        // 新規イベントを追加する場合
         startDate = new Date(selectedInfo.start);
         endDate = new Date(selectedInfo.end);
       }
   
-      // 時間を設定
       const [startHours, startMinutes] = selectedStartTime.split(':');
       startDate.setHours(startHours, startMinutes);
   
       const [endHours, endMinutes] = selectedEndTime.split(':');
       endDate.setHours(endHours, endMinutes);
   
+      const scheduleData = {
+        title: eventName,
+        start_time: startDate.toISOString(),
+        end_time: endDate.toISOString()
+      };
+  
       if (selectedInfo.event) {
-        // 既存のイベントを更新
-        selectedInfo.event.remove();
+        updateSchedule(selectedInfo.event.id, scheduleData);
+      } else {
+        createSchedule(scheduleData);
       }
   
-      // カレンダーにイベントを追加（新規追加または更新）
-      calendar.addEvent({
-        title: eventName,
-        start: startDate.toISOString(),
-        end: endDate.toISOString()
-      });
-  
-      // フォームを非表示にしてリセット
       document.getElementById('eventForm').style.display = 'none';
       selectedInfo = null;
     } else {
@@ -66,29 +62,83 @@ function handleSaveEvent() {
     }
 }
 
-// DOMが読み込まれた後にカレンダーを初期化
+function createSchedule(scheduleData) {
+    fetch('/calendar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: JSON.stringify({ schedule: scheduleData }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      calendar.addEvent({
+        id: data.id,
+        title: scheduleData.title,
+        start: scheduleData.start_time,
+        end: scheduleData.end_time
+      });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function updateSchedule(id, scheduleData) {
+    fetch(`/calendar/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: JSON.stringify({ schedule: scheduleData }),
+    })
+    .then(response => response.json())
+    .then(() => {
+      const event = calendar.getEventById(id);
+      event.remove();
+      calendar.addEvent({
+        id: id,
+        title: scheduleData.title,
+        start: scheduleData.start_time,
+        end: scheduleData.end_time
+      });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function deleteEvent(event) {
+    if (confirm('この予定を削除してもよろしいですか？')) {
+      fetch(`/calendar/${event.id}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': token
+        },
+      })
+      .then(response => response.json())
+      .then(() => {
+        event.remove();
+        document.getElementById('eventDetailsForm').style.display = 'none';
+      })
+      .catch(error => console.error('Error:', error));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    generateTimeOptions(); // 時間選択オプションを生成
+    generateTimeOptions();
 
     const calendarEl = document.getElementById('calendar');
     const eventForm = document.getElementById('eventForm');
 
-    // カレンダーを初期化
     calendar = new Calendar(calendarEl, {
       plugins: [interactionPlugin, timeGridPlugin],
       initialView: 'timeGridWeek',
       selectable: true,
-
-      // 日付範囲が選択されたときの処理
+      events: '/calendar.json',
       select: function(info) {
-        selectedInfo = info; // 選択された情報を保存
-
-        // フォームを表示して位置を設定
+        selectedInfo = info;
         eventForm.style.display = 'block';
         eventForm.style.left = info.jsEvent.pageX + 'px';
         eventForm.style.top = info.jsEvent.pageY + 'px';
-
-        // フォームの初期値を設定
         document.getElementById('eventName').value = '';
         document.getElementById('startTime').value = info.start.toTimeString().slice(0, 5);
         document.getElementById('endTime').value = info.end.toTimeString().slice(0, 5);
@@ -98,9 +148,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    calendar.render(); // カレンダーを描画
+    calendar.render();
 
-    // 保存ボタンにイベントリスナーを追加
     document.getElementById('saveEvent').addEventListener('click', handleSaveEvent);
 });
 
@@ -111,28 +160,23 @@ function showEventDetails(info) {
       document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
       document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
       
-      // 編集ボタンのイベントリスナー
       document.getElementById('editEventButton').onclick = function() {
         editEvent(info.event, info.jsEvent);
       };
       
-      // 削除ボタンのイベントリスナー
       document.getElementById('deleteEventButton').onclick = function() {
         deleteEvent(info.event);
       };
     
-      // フォームを表示して位置を設定
       detailsForm.style.display = 'block';
       detailsForm.style.position = 'absolute';
       detailsForm.style.left = info.jsEvent.pageX + 'px';
       detailsForm.style.top = info.jsEvent.pageY + 'px';
   
-      // フォーム外クリックで閉じる (遅延を追加)
       setTimeout(() => {
         document.addEventListener('click', closeDetailsForm);
       }, 0);
   
-      // フォーム内クリックの伝播を停止
       detailsForm.addEventListener('click', function(e) {
         e.stopPropagation();
       });
@@ -150,26 +194,16 @@ function closeDetailsForm(e) {
 }
   
 function editEvent(event, jsEvent) {
-    // 編集フォームに現在のイベント情報を設定
     document.getElementById('eventName').value = event.title;
     const startTime = new Date(event.start).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
     const endTime = new Date(event.end).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
     document.getElementById('startTime').value = startTime;
     document.getElementById('endTime').value = endTime;
   
-    // 編集モードフラグを設定
     selectedInfo = { event: event };
   
-    // 詳細フォームを非表示にし、編集フォームを表示
     document.getElementById('eventDetailsForm').style.display = 'none';
     document.getElementById('eventForm').style.display = 'block';
     document.getElementById('eventForm').style.left = jsEvent.pageX + 'px';
     document.getElementById('eventForm').style.top = jsEvent.pageY + 'px';
-}
-  
-function deleteEvent(event) {
-    if (confirm('この予定を削除してもよろしいですか？')) {
-      event.remove();
-      document.getElementById('eventDetailsForm').style.display = 'none';
-    }
 }

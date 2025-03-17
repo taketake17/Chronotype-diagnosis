@@ -26,7 +26,12 @@ Rails.application.routes.draw do
   get "chronotype/details/wolf"=>"chronotype#details_wolf"
   get "chronotype/details/dolphin"=> "chronotype#details_dolphin"
 
-  get "calendar"=>"calendar#index"
+  resources :calendar, only: [ :index, :create, :update, :destroy ] do
+    collection do
+      get "index.json", to: "calendar#index", defaults: { format: "json" }
+    end
+  end
+
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
