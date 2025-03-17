@@ -1,6 +1,6 @@
 class CalendarController < ApplicationController
   def index
-    @schedules = Schedule.all
+    @schedules = current_user.schedules
     respond_to do |format|
       format.html # index.html.erbを表示
       format.json { render json: @schedules.map { |s| { id: s.id, title: s.title, start: s.start_time, end: s.end_time } } }
