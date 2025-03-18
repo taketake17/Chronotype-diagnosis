@@ -123,7 +123,7 @@ function deleteEvent(event) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('turbo:load', function() {
     generateTimeOptions();
 
     const calendarEl = document.getElementById('calendar');
