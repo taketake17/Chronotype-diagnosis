@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :user_chronotypes
   has_many :schedules, dependent: :destroy
 
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
   def chronotype_id
     user_chronotype&.chronotype_id
   end
