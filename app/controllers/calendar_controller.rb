@@ -1,4 +1,7 @@
 class CalendarController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_chronotype
+
   def index
     @user_chronotype = current_user.user_chronotype
     if @user_chronotype
@@ -42,11 +45,6 @@ class CalendarController < ApplicationController
       end
     end
 
-    Rails.logger.debug "User Chronotype: #{@user_chronotype.inspect}"
-    Rails.logger.debug "Default Schedules: #{@default_schedules.inspect}"
-    Rails.logger.debug "User Schedules: #{@user_schedules.inspect}"
-    Rails.logger.debug "Combined Schedules: #{@combined_schedules.inspect}"
-
     respond_to do |format|
       format.html
       format.json { render json: @combined_schedules }
@@ -84,6 +82,14 @@ class CalendarController < ApplicationController
   end
 
   private
+
+  def check_chronotype
+    return if current_user.chronotype_id.present?
+    return if request.path == tops_path # クロノタイプ診断ページ自体は許可
+
+    flash[:alert] = "クロノタイプの判定を行ってください"
+    redirect_to tops_path
+  end
 
   def combine_date_and_time(date, time)
     Time.zone.local(date.year, date.month, date.day, time.hour, time.min, time.sec)
