@@ -85,7 +85,7 @@ class CalendarController < ApplicationController
 
   def check_chronotype
     return if current_user.chronotype_id.present?
-    return if request.path == tops_path # クロノタイプ診断ページ自体は許可
+    return if request.path == tops_path
 
     flash[:alert] = "クロノタイプの判定を行ってください"
     redirect_to tops_path
