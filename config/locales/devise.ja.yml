@@ -5,6 +5,8 @@ ja:
       send_instructions: "メールアドレスの確認方法を数分以内に送信します。"
       send_paranoid_instructions: "ご登録のメールアドレスが存在する場合、メールアドレスの確認方法を数分以内に送信します。"
     failure:
+      locked: "度重なるパスワードの間違いによりアカウントがロックされました"
+      last_attempt: "あと1回の試行でアカウントがロックされます。"
       already_authenticated: "すでにログインしています。"
       inactive: "アカウントが有効になっていません。"
       invalid: "メールアドレスまたはパスワードが違います。"

@@ -191,6 +191,14 @@ Devise.setup do |config|
   # time the user will be asked for credentials again. Default is 30 minutes.
   # config.timeout_in = 30.minutes
 
+  #失敗回数5回で1時間ロック
+
+  config.lock_strategy = :failed_attempts
+  config.maximum_attempts = 5
+  config.unlock_strategy = :time
+  config.unlock_in = 1.hour
+
+
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
   # :failed_attempts = Locks an account after a number of failed attempts to sign in.
@@ -305,6 +313,8 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
+
+  config.timeout_in = 30.minutes
 
   # ==> Configuration for :registerable
 
