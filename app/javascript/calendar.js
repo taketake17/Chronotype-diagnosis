@@ -5,7 +5,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 let calendar;
 let selectedInfo = null;
 
-// CSRFトークンの取得
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 function generateTimeOptions() {

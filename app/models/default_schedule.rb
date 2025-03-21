@@ -1,21 +1,32 @@
 class DefaultSchedule < ApplicationRecord
   belongs_to :chronotype
+  def self.generate_schedules_for_period(start_date, end_date, default_schedules)
+    combined_schedules = []
 
-  scope :daily, -> { where(day_of_week: 0) }
+    (start_date..end_date).each do |date|
+      default_schedules.each do |schedule|
+        start_time = Time.parse(schedule.start_time.to_s)
+        end_time = Time.parse(schedule.end_time.to_s)
+        start_datetime = combine_date_and_time(date, start_time)
+        end_datetime = combine_date_and_time(date, end_time)
 
-  def start_time
-    self[:start_time]&.strftime("%H:%M")
+        combined_schedules << {
+          id: "default_#{schedule.id}_#{date}",
+          title: schedule.title,
+          start: start_datetime,
+          end: end_datetime,
+          is_default: true
+        }
+      end
+    end
+
+    combined_schedules
   end
 
-  def end_time
-    self[:end_time]&.strftime("%H:%M")
-  end
+  private
 
-  def start_time=(time_string)
-    self[:start_time] = Time.zone.parse(time_string)
-  end
-
-  def end_time=(time_string)
-    self[:end_time] = Time.zone.parse(time_string)
+  # 日付と時間を組み合わせてDateTimeオブジェクトを作成するヘルパーメソッド
+  def self.combine_date_and_time(date, time)
+    Time.zone.local(date.year, date.month, date.day, time.hour, time.min, time.sec)
   end
 end
