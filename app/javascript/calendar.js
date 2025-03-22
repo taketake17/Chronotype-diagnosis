@@ -133,6 +133,8 @@ document.addEventListener('turbo:load', function () {
     initialView: 'timeGridWeek',
     selectable: true,
     events: '/calendar.json',
+    locale: 'ja', 
+    timeZone: 'Asia/Tokyo',
     select: function (info) {
       selectedInfo = info;
       eventForm.style.display = 'block';
