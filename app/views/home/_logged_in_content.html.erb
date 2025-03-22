@@ -1,16 +1,13 @@
 <section class="text-gray-600 body-font">
   <div class="container px-5 py-16 mx-auto">
-    <!-- タイトル -->
     <h1 class="sm:text-6xl text-3xl font-medium title-font text-center text-gray-900 mb-10">
       クロノタイプチェッカー
     </h1>
     
-    <!-- サブタイトル -->
     <p class="sm:text-2xl text-xl font-light title-font text-center text-gray-700 mb-16">
       自分のクロノタイプを知って、生活リズムを最適化しましょう！
     </p>
     
-    <!-- ボタン -->
     <div class="flex justify-center">
       <%= link_to question_first_index_path, class: "items-center relative overflow-hidden rounded-md bg-blue-500 px-4 py-5 text-xl text-white duration-300 hover:bg-blue-600 active:translate-y-1 active:scale-x-105" do %>
         新しい判定を始める
@@ -18,7 +15,6 @@
     </div>
   </div>
 
-  <!-- クロノタイプ画像 -->
   <div class="flex justify-center items-center gap-4 mt-12">
     <%= image_tag 'wolf.png', class: "w-60 h-60 object-contain", alt: "Wolf" %>
     <%= image_tag 'kuma.png', class: "w-60 h-60 object-contain", alt: "Bear" %>
