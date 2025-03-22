@@ -10,7 +10,7 @@ class CalendarController < ApplicationController
     start_date = params[:start].present? ? Date.parse(params[:start]) : Date.today.beginning_of_week
     end_date = params[:end].present? ? Date.parse(params[:end]) : start_date + 6.days
 
-    @combined_schedules = DefaultSchedule.generate_schedules_for_period(start_date, end_date, @default_schedules)
+    @combined_schedules = DefaultSchedule.create_default_weekly_schedule(start_date, end_date, @default_schedules)
     @combined_schedules += @user_schedules.map do |s|
       {
         id: s.id,

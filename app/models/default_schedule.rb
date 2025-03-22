@@ -1,27 +1,19 @@
 class DefaultSchedule < ApplicationRecord
   belongs_to :chronotype
-  def self.generate_schedules_for_period(start_date, end_date, default_schedules)
-    combined_schedules = []
-
-    (start_date..end_date).each do |date|
-      default_schedules.each do |schedule|
-        start_time = Time.parse(schedule.start_time.to_s)
-        end_time = Time.parse(schedule.end_time.to_s)
-        start_datetime = combine_date_and_time(date, start_time)
-        end_datetime = combine_date_and_time(date, end_time)
-
-        combined_schedules << {
+  def self.create_default_weekly_schedule(start_date, end_date, default_schedules)
+    (start_date..end_date).flat_map do |date|
+      default_schedules.map do |schedule|
+        {
           id: "default_#{schedule.id}_#{date}",
           title: schedule.title,
-          start: start_datetime,
-          end: end_datetime,
+          start: date.to_time.change(hour: schedule.start_time.hour, min: schedule.start_time.min),
+          end: date.to_time.change(hour: schedule.end_time.hour, min: schedule.end_time.min),
           is_default: true
         }
       end
     end
-
-    combined_schedules
   end
+
 
   private
 
