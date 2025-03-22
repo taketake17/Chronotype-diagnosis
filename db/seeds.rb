@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-
+singapore_time_zone = ActiveSupport::TimeZone['Asia/Singapore']
 # オオカミ型（chronotype_id: 4）のデフォルトスケジュール
 [
   { title: "睡眠", start_time: '00:30', end_time: '07:00' },
