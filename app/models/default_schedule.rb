@@ -17,7 +17,6 @@ class DefaultSchedule < ApplicationRecord
 
   private
 
-  # 日付と時間を組み合わせてDateTimeオブジェクトを作成するヘルパーメソッド
   def self.combine_date_and_time(date, time)
     Time.zone.local(date.year, date.month, date.day, time.hour, time.min, time.sec)
   end
