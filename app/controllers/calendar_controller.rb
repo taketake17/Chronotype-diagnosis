@@ -15,8 +15,8 @@ class CalendarController < ApplicationController
       {
         id: s.id,
         title: s.title,
-        start: s.start_time.in_time_zone('Asia/Tokyo'),
-        end: s.end_time.in_time_zone('Asia/Tokyo'), 
+        start: s.start_time.in_time_zone("Asia/Tokyo"),
+        end: s.end_time.in_time_zone("Asia/Tokyo"),
         is_default: false
       }
     end
