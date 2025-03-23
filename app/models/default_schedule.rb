@@ -6,7 +6,7 @@ class DefaultSchedule < ApplicationRecord
       default_schedules.map do |schedule|
         start_time = combine_date_and_time(date, schedule.start_time)
         end_time = combine_date_and_time(date, schedule.end_time)
-
+        
         if end_time < start_time
           end_time = end_time + 1.day
         end
