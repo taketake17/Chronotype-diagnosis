@@ -133,24 +133,19 @@ document.addEventListener('turbo:load', function () {
     initialView: 'timeGridWeek',
     selectable: true,
     events: '/calendar.json',
-    locale: 'ja', 
-    timeZone: 'Asia/Tokyo',
     select: function (info) {
       selectedInfo = info;
       eventForm.style.display = 'block';
       eventForm.style.left = info.jsEvent.pageX + 'px';
       eventForm.style.top = info.jsEvent.pageY + 'px';
       document.getElementById('eventName').value = '';
-      const jstStart = new Date(info.start);
-      const jstEnd = new Date(info.end);
-      document.getElementById('startTime').value =  jstStart.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
-      document.getElementById('endTime').value =  jstEnd.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('startTime').value = info.start.toTimeString().slice(0, 5);
+      document.getElementById('endTime').value = info.end.toTimeString().slice(0, 5);
     },
     eventClick: function (info) {
       showEventDetails(info);
       info.el.style.cursor = 'pointer';
 
-      // 他のすべてのイベントの選択可能状態を維持
       const allEvents = calendar.getEvents();
       allEvents.forEach(function (event) {
         if (event !== info.event) {
@@ -170,11 +165,9 @@ document.addEventListener('turbo:load', function () {
   function showEventDetails(info) {
     if (info && info.event) {
       const detailsForm = document.getElementById('eventDetailsForm');
-      const jstStart = new Date(info.event.start);
-      const jstEnd = info.event.end ? new Date(info.event.end) : null;
       document.getElementById('eventDetailTitle').textContent = info.event.title;
-      document.getElementById('eventDetailStart').textContent = jstStart.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });
-      document.getElementById('eventDetailEnd').textContent = jstEnd ? jstEnd.toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) : 'N/A';
+      document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
+      document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
   
       document.getElementById('editEventButton').onclick = function () {
         editEvent(info.event, info.jsEvent);
