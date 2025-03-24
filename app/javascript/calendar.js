@@ -184,28 +184,38 @@ document.addEventListener('turbo:load', function () {
       document.getElementById('eventDetailTitle').textContent = info.event.title;
       document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
       document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
-  
+
       const editButton = document.getElementById('editEventButton');
       const deleteButton = document.getElementById('deleteEventButton');
-  
+
       if (isDefaultEvent(info.event)) {
         editButton.style.display = 'none';
         deleteButton.style.display = 'none';
       } else {
-        editButton.style.display = 'inline-block'; 
-        deleteButton.style.display = 'inline-block'; 
-  
-        editButton.onclick = function () {
+        editButton.style.display = 'inline-block';
+        deleteButton.style.display = 'inline-block';
+      }
+
+      editButton.onclick = function (e) {
+        console.log('Edit button clicked'); // デバッグ用ログ
+        if (isDefaultEvent(info.event)) {
+          alert('デフォルトスケジュールは編集できません。');
+        } else {
+          console.log('Attempting to edit event:', info.event); // デバッグ用ログ
           editEvent(info.event, info.jsEvent);
-        };
-  
-        deleteButton.onclick = function () {
+        }
+      };
+
+      deleteButton.onclick = function () {
+        if (isDefaultEvent(info.event)) {
+          alert('デフォルトスケジュールは削除できません。');
+        } else {
           if (confirm('この予定を削除してもよろしいですか？')) {
             deleteEvent(info.event);
           }
-        };
-      }
-  
+        }
+      };
+
       detailsForm.style.display = 'block';
       detailsForm.style.position = 'absolute';
       detailsForm.style.left = info.jsEvent.pageX + 'px';
@@ -215,7 +225,7 @@ document.addEventListener('turbo:load', function () {
         document.removeEventListener('click', detailsFormClickListener);
       }
   
-      detailsFormClickListener = function (e) {
+      detailsFormClickListener = function(e) {
         if (!detailsForm.contains(e.target)) {
           detailsForm.style.display = 'none';
           document.removeEventListener('click', detailsFormClickListener);
@@ -230,5 +240,25 @@ document.addEventListener('turbo:load', function () {
     } else {
       console.error('Event information is missing');
     }
-  }  
+  }
+
+  function editEvent(event, jsEvent) {
+    console.log('editEvent function called', event, jsEvent);
+    if (isDefaultEvent(event)) {
+      alert('デフォルトスケジュールは編集できません。');
+      return;
+    }
+    document.getElementById('eventName').value = event.title;
+    const startTime = new Date(event.start).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    const endTime = new Date(event.end).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('startTime').value = startTime;
+    document.getElementById('endTime').value = endTime;
+
+    selectedInfo = { event: event };
+
+    document.getElementById('eventDetailsForm').style.display = 'none';
+    document.getElementById('eventForm').style.display = 'block';
+    document.getElementById('eventForm').style.left = jsEvent.pageX + 'px';
+    document.getElementById('eventForm').style.top = jsEvent.pageY + 'px';
+  }
 });
