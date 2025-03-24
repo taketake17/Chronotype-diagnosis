@@ -185,15 +185,28 @@ document.addEventListener('turbo:load', function () {
       document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
       document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
 
-      document.getElementById('editEventButton').onclick = function () {
+      const editButton = document.getElementById('editEventButton');
+      const deleteButton = document.getElementById('deleteEventButton');
+
+      if (isDefaultEvent(info.event)) {
+        editButton.style.display = 'none';
+        deleteButton.style.display = 'none';
+      } else {
+        editButton.style.display = 'inline-block';
+        deleteButton.style.display = 'inline-block';
+      }
+
+      editButton.onclick = function (e) {
+        console.log('Edit button clicked'); // デバッグ用ログ
         if (isDefaultEvent(info.event)) {
           alert('デフォルトスケジュールは編集できません。');
         } else {
+          console.log('Attempting to edit event:', info.event); // デバッグ用ログ
           editEvent(info.event, info.jsEvent);
         }
       };
 
-      document.getElementById('deleteEventButton').onclick = function () {
+      deleteButton.onclick = function () {
         if (isDefaultEvent(info.event)) {
           alert('デフォルトスケジュールは削除できません。');
         } else {
@@ -230,6 +243,7 @@ document.addEventListener('turbo:load', function () {
   }
 
   function editEvent(event, jsEvent) {
+    console.log('editEvent function called', event, jsEvent);
     if (isDefaultEvent(event)) {
       alert('デフォルトスケジュールは編集できません。');
       return;
@@ -246,20 +260,5 @@ document.addEventListener('turbo:load', function () {
     document.getElementById('eventForm').style.display = 'block';
     document.getElementById('eventForm').style.left = jsEvent.pageX + 'px';
     document.getElementById('eventForm').style.top = jsEvent.pageY + 'px';
-  }
-
-  function deleteEvent(event) {
-    fetch(`/calendar/${event.id}`, {
-      method: 'DELETE',
-      headers: {
-        'X-CSRF-Token': token
-      },
-    })
-    .then(response => response.json())
-    .then(() => {
-      calendar.getEventById(event.id).remove();
-      document.getElementById('eventDetailsForm').style.display = 'none';
-    })
-    .catch(error => console.error('Error:', error));
   }
 });
