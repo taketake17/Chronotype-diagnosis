@@ -5,7 +5,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 let calendar;
 let selectedInfo = null;
 
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 function generateTimeOptions() {
   const startTime = document.getElementById('startTime');
@@ -78,6 +78,7 @@ function createSchedule(scheduleData) {
         start: scheduleData.start_time,
         end: scheduleData.end_time
       });
+      calendar.refetchEvents();
     })
     .catch(error => console.error('Error:', error));
 }
@@ -123,7 +124,11 @@ function deleteEvent(event) {
 }
 
 document.addEventListener('turbo:load', function () {
+  token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
   generateTimeOptions();
+
+
 
   const calendarEl = document.getElementById('calendar');
   const eventForm = document.getElementById('eventForm');
@@ -133,6 +138,13 @@ document.addEventListener('turbo:load', function () {
     initialView: 'timeGridWeek',
     selectable: true,
     events: '/calendar.json',
+    eventDidMount: function (info) {
+      if (info.event.extendedProps.isDefault) {
+        info.el.style.backgroundColor = '#C8E6C9';
+        info.el.style.borderColor = '#FFE082';
+        info.el.style.color = '#856404';
+      }
+    },
     select: function (info) {
       selectedInfo = info;
       eventForm.style.display = 'block';
@@ -162,21 +174,35 @@ document.addEventListener('turbo:load', function () {
 
   let detailsFormClickListener = null;
 
+  function isDefaultEvent(event) {
+    return event.extendedProps && event.extendedProps.isDefault;
+  }
+
   function showEventDetails(info) {
     if (info && info.event) {
       const detailsForm = document.getElementById('eventDetailsForm');
       document.getElementById('eventDetailTitle').textContent = info.event.title;
       document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
       document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
-  
+
       document.getElementById('editEventButton').onclick = function () {
-        editEvent(info.event, info.jsEvent);
+        if (isDefaultEvent(info.event)) {
+          alert('デフォルトスケジュールは編集できません。');
+        } else {
+          editEvent(info.event, info.jsEvent);
+        }
       };
-  
+
       document.getElementById('deleteEventButton').onclick = function () {
-        deleteEvent(info.event);
+        if (isDefaultEvent(info.event)) {
+          alert('デフォルトスケジュールは削除できません。');
+        } else {
+          if (confirm('この予定を削除してもよろしいですか？')) {
+            deleteEvent(info.event);
+          }
+        }
       };
-  
+
       detailsForm.style.display = 'block';
       detailsForm.style.position = 'absolute';
       detailsForm.style.left = info.jsEvent.pageX + 'px';
@@ -202,9 +228,12 @@ document.addEventListener('turbo:load', function () {
       console.error('Event information is missing');
     }
   }
-  
 
   function editEvent(event, jsEvent) {
+    if (isDefaultEvent(event)) {
+      alert('デフォルトスケジュールは編集できません。');
+      return;
+    }
     document.getElementById('eventName').value = event.title;
     const startTime = new Date(event.start).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
     const endTime = new Date(event.end).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
@@ -217,5 +246,20 @@ document.addEventListener('turbo:load', function () {
     document.getElementById('eventForm').style.display = 'block';
     document.getElementById('eventForm').style.left = jsEvent.pageX + 'px';
     document.getElementById('eventForm').style.top = jsEvent.pageY + 'px';
+  }
+
+  function deleteEvent(event) {
+    fetch(`/calendar/${event.id}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': token
+      },
+    })
+    .then(response => response.json())
+    .then(() => {
+      calendar.getEventById(event.id).remove();
+      document.getElementById('eventDetailsForm').style.display = 'none';
+    })
+    .catch(error => console.error('Error:', error));
   }
 });
