@@ -32,7 +32,7 @@
   <%= hidden_field_tag :page, params[:page] || 1 %>
   <div class="mt-8 text-center">
     <% if @questions.last_page? %>
-      <%= f.submit '結果を見る', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= f.submit '次の質問へ', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% else %>
       <%= f.submit '次へ', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% end %>
