@@ -11,8 +11,12 @@ Rails.application.routes.draw do
   root "tops#index"
   get "description" =>"tops#description"
 
-  resources :question_first
+
+
+  get "question_first"=>"question_first#index"
   get "question_second"=>"question_second#index"
+
+  resources :question_first
 
   resources :question_second
 
