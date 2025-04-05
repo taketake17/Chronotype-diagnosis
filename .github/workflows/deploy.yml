@@ -1,16 +1,24 @@
-name: Render Deploy
+name: Deploy to Render
 
+# mainブランチにpushされた時に実行
 on:
   push:
-  pull_request:
+    branches:
+      - main
 
 jobs:
   deploy:
+    # テスト環境を最新バージョンのUbuntu(Linux)に設定
     runs-on: ubuntu-latest
+
     steps:
+      # リポジトリのコードをチェックアウト
+      - uses: actions/checkout@v4
+
+      # Renderへのデプロイ
       - uses: ttskch/render-deploy@v1.0.0
         with:
           api-key: ${{ secrets.RENDER_API_KEY }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          interval: 20 # optional
-          timeout: 300 # optional
+          interval: 20 # デプロイ進捗確認間隔（秒）
+          timeout: 300 # 最大待機時間（秒）
