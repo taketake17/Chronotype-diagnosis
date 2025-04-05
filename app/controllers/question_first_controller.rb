@@ -4,6 +4,7 @@ class QuestionFirstController < ApplicationController
   def index
     @questions = Question.where(part: 1).page(params[:page]).per(5)
     @total_questions = Question.where(part: 1).count
+    @progress = calculate_progress
   end
 
   def create
@@ -26,6 +27,12 @@ class QuestionFirstController < ApplicationController
   end
 
   private
+
+  def calculate_progress
+    total_questions = Question.where(part: 1).count # 全質問数
+    answered_questions = session[:answers]&.keys&.size || 0 # 回答済みの質問数
+    (answered_questions.to_f / total_questions * 100).round # 進捗率計算
+  end
 
   def filtered_answers
     allowed_keys = Question.where(part: 1).pluck(:id).map(&:to_s)
