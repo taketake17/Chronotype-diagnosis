@@ -5,6 +5,21 @@
   <h3 class="text-lg text-center">質問パート2では、3択の中から最も自分自身に合う答えをひとつ選んでください。<br>質問は全部で20問あります。全て答えて次へのボタンを押してください。</h3>
 </div>
 
+<div class="flex items-center justify-between sm:w-full md:w-1/2 mx-auto mb-4">
+  <span class="text-sm text-gray-600">0%</span>
+  <span class="text-sm text-gray-600">50%</span>
+  <span class="text-sm text-gray-600">100%</span>
+</div>
+<div class="sm:w-full md:w-1/2 h-4 bg-gray-200 rounded-full mx-auto">
+  <div id="progress-bar" 
+       class="h-full bg-blue-600 rounded-full transition-all duration-300" 
+       style="width: <%= @progress %>%;" 
+       aria-valuenow="<%= @progress %>" 
+       aria-valuemin="0" 
+       aria-valuemax="100">
+  </div>
+</div>
+
 <% if flash[:alert] %>
   <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
     <span class="block sm:inline"><%= flash[:alert] %></span>
@@ -17,13 +32,13 @@
       <div class="mb-6">
         <h3 class="text-lg font-semibold mb-3"><%= question.question_text %></h3>
         <div class="space-y-6 pl-4">
-          <% [1, 2, 3].each do |option| %>
+        <% [1, 2, 3].each do |option| %>
             <div class="flex items-center">
-              <%= f.radio_button "answers[#{question.id}]", option, 
-                                 id: "answers_#{question.id}_#{option}", 
-                                 class: "form-radio h-4 w-4 text-blue-600",
-                                 required: true %>
-              <%= f.label "answers_#{question.id}_#{option}", question.send("option#{option}"), class: "ml-2 text-sm" %>
+                <%= f.radio_button "answers[#{question.id}]", option, 
+                         id: "answers_#{question.id}_#{option}", 
+                         class: "form-radio h-8 w-8 text-blue-600 focus:ring focus:ring-blue-300 hover:ring hover:ring-blue-200", # HoverとFocusエフェクト追加
+                         required: true %>
+                <%= f.label "answers_#{question.id}_#{option}", question.send("option#{option}"), class: "ml-4 text-lg" %>
             </div>
           <% end %>
         </div>

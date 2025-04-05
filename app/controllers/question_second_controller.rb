@@ -1,8 +1,10 @@
 class QuestionSecondController < ApplicationController
   before_action :authenticate_user!
+
   def index
     @questions = Question.where(part: 2).page(params[:page]).per(5)
     @total_questions = Question.where(part: 2).count
+    @progress = calculate_progress
   end
 
   def create
@@ -25,6 +27,12 @@ class QuestionSecondController < ApplicationController
   end
 
   private
+
+  def calculate_progress
+    total_questions = Question.where(part: 2).count # 全質問数
+    answered_questions = session[:answers]&.keys&.size || 0 # 回答済みの質問数
+    (answered_questions.to_f / total_questions * 100).round # 進捗率計算
+  end
 
   def filtered_answers
     allowed_keys = Question.where(part: 2).pluck(:id).map(&:to_s)
