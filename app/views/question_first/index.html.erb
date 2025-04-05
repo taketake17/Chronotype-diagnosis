@@ -1,5 +1,5 @@
 <div class="mb-6">
- <h3 class="text-lg font-semibold mb-3">質問パート1</h3>
+  <h3 class="text-lg font-semibold mb-3">質問パート1</h3>
 </div>
 <div class="flex justify-center">
   <h3 class="text-lg text-center">質問パート1では、「YES」か「NO」で答えられる質問を10問出題しますので、全て答えて次へのボタンを押して下さい。</h3>
@@ -20,7 +20,6 @@
   </div>
 </div>
 
-
 <% if flash[:alert] %>
   <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
     <span class="block sm:inline"><%= flash[:alert] %></span>
@@ -33,24 +32,38 @@
       <div class="mb-6">
         <h3 class="text-lg font-semibold mb-3"><%= question.question_text %></h3>
         <div class="space-y-6 pl-4">
-            <div class="flex items-center">
-            <%= f.radio_button "answers[#{question.id}]", 1, id: "answers_#{question.id}_1", class: "form-radio h-4 w-4 text-blue-600", required: true %>
-            <%= f.label "answers_#{question.id}_1", question.option1, class: "ml-2 text-sm" %>
-            </div>
-          <div class="flex items-center">
-            <%= f.radio_button "answers[#{question.id}]", 0, id: "answers_#{question.id}_0", class: "form-radio h-4 w-4 text-blue-600", required: true %>
-            <%= f.label "answers_#{question.id}_0", question.option2, class: "ml-2 text-sm" %>
+          <!-- YES Option -->
+          <div class="flex items-center group">
+            <%= f.radio_button "answers[#{question.id}]", 1, id: "answers_#{question.id}_1", 
+                               class: "form-radio h-6 w-6 text-blue-600 focus:ring focus:ring-blue-300 hover:ring hover:ring-blue-200 transition-all duration-200", 
+                               required: true %>
+            <%= f.label "answers_#{question.id}_1", question.option1, 
+                        class: "ml-4 text-lg group-hover:text-blue-600 group-focus:text-blue-600 transition-all duration-200" %>
+          </div>
+
+          <!-- NO Option -->
+          <div class="flex items-center group">
+            <%= f.radio_button "answers[#{question.id}]", 0, id: "answers_#{question.id}_0", 
+                               class: "form-radio h-6 w-6 text-blue-600 focus:ring focus:ring-blue-300 hover:ring hover:ring-blue-200 transition-all duration-200", 
+                               required: true %>
+            <%= f.label "answers_#{question.id}_0", question.option2, 
+                        class: "ml-4 text-lg group-hover:text-blue-600 group-focus:text-blue-600 transition-all duration-200" %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
+
   <%= hidden_field_tag :page, params[:page] || 1 %>
+
+  <!-- Submit Button -->
   <div class="mt-8 text-center">
     <% if @questions.last_page? %>
-      <%= f.submit '質問パート2へ!?', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= f.submit '質問パート2へ!?', 
+                   class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200" %>
     <% else %>
-      <%= f.submit '次の質問へ', class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= f.submit '次の質問へ', 
+                   class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-200" %>
     <% end %>
   </div>
 <% end %>
