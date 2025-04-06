@@ -12,10 +12,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
           chronotype_id: chronotype_id
         )
         Rails.logger.info "UserChronotype 作成成功 - クロノタイプID: #{chronotype_id}"
-        session.delete(:chronotype)
+        session.delete(:chronotype) # セッションデータを削除
       else
         Rails.logger.warn "クロノタイプIDが見つかりません。"
       end
+    end
+  end
+
+  protected
+
+  def after_sign_up_path_for(resource)
+    if resource.user_chronotypes.exists? # データベースでクロノタイプIDの有無を確認
+      calendar_index_path # カレンダー画面へリダイレクト
+    else
+      question_first_path # 質問パート1画面へリダイレクト
     end
   end
 end

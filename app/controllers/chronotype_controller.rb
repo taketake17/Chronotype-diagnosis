@@ -21,14 +21,17 @@ class ChronotypeController < ApplicationController
     end
 
     def details_bear
+        Rails.logger.info "セッションデータ: #{session[:chronotype]}"
         render "chronotype/details/bear"
     end
 
     def details_lion
+        Rails.logger.info "セッションデータ: #{session[:chronotype]}"
         render "chronotype/details/lion"
     end
 
     def details_wolf
+        Rails.logger.info "セッションデータ: #{session[:chronotype]}"
         render "chronotype/details/wolf"
     end
 
