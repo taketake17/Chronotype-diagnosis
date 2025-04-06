@@ -1,5 +1,5 @@
 class QuestionSecondController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [ :index, :create ]
 
   def index
     @questions = Question.where(part: 2).page(params[:page]).per(5)

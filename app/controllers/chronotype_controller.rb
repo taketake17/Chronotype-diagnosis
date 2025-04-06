@@ -1,7 +1,6 @@
 class ChronotypeController < ApplicationController
-    before_action :authenticate_user!
-
     def dolphin
+         Rails.logger.info "セッションデータ: #{session[:chronotype_id]}"
         @message = Chronotype.find(1)
         render "chronotype/summary/dolphin"
     end
@@ -34,6 +33,7 @@ class ChronotypeController < ApplicationController
     end
 
     def details_dolphin
+         Rails.logger.info "セッションデータ: #{session[:chronotype]}"
         render "chronotype/details/dolphin"
     end
 end
