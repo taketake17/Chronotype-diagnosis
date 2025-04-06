@@ -1,6 +1,4 @@
 class QuestionFirstController < ApplicationController
-  before_action :authenticate_user!
-
   def index
     @questions = Question.where(part: 1).page(params[:page]).per(5)
     @total_questions = Question.where(part: 1).count
@@ -51,25 +49,37 @@ class QuestionFirstController < ApplicationController
 
     total_score = all_answers.values.map(&:to_i).sum
 
-    save_user_answers(all_answers)
+    save_user_or_session_answers(all_answers)
+    handle_chronotype_result(total_score)
+  end
 
-    if total_score >= 7
-      create_dolphin_chronotype(total_score)
-      session.delete(:answers)
-      redirect_to chronotype_summary_dolphin_path
+  def save_user_or_session_answers(answers)
+    if user_signed_in?
+      answers.each do |question_id, score|
+        UserAnswer.create(
+          user_id: current_user.id,
+          question_id: question_id.to_i,
+          selected_option: score.to_i
+        )
+      end
     else
-      session.delete(:answers)
-      redirect_to question_second_path
+      session[:saved_answers] = answers # 未ログイン時はセッションに保存しておく
     end
   end
 
-  def save_user_answers(answers)
-    answers.each do |question_id, score|
-      UserAnswer.create(
-        user_id: current_user.id,
-        question_id: question_id.to_i,
-        selected_option: score.to_i
-      )
+  def handle_chronotype_result(score)
+    if score >= 7
+      if user_signed_in?
+        create_dolphin_chronotype(score)
+        session.delete(:answers)
+        redirect_to chronotype_summary_dolphin_path # ログイン時のイルカ型結果ページへリダイレクト
+      else
+        session[:chronotype] = { chronotype_id: 1, score: score }
+        redirect_to chronotype_summary_dolphin_path
+      end
+    else
+      session.delete(:answers)
+      redirect_to question_second_path # 次の質問ページへ移行（未ログインでも対応）
     end
   end
 

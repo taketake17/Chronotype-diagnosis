@@ -316,6 +316,10 @@ Devise.setup do |config|
 
   config.timeout_in = 30.minutes
 
+
+
+
+
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
