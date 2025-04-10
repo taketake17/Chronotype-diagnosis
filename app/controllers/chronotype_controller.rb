@@ -39,4 +39,8 @@ class ChronotypeController < ApplicationController
          Rails.logger.info "セッションデータ: #{session[:chronotype]}"
         render "chronotype/details/dolphin"
     end
+
+    def share_and_redirect
+        render "chronotype/details/bear"
+    end
 end
