@@ -8,5 +8,12 @@
     <%= @message.description %>
   </p>
   <p class="text-gray-300 mb-4">詳しい内容を見たい方は・・・</p>
-  <%= link_to 'ボタンをクリック！',chronotype_details_dolphin_path, class: "bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 text-lg" %>
+  <%= button_to 'Xで結果をシェア！', 
+    chronotype_details_dolphin_path, 
+    method: :post, 
+    form: { 
+      data: { turbo: false },
+      onsubmit: "window.open('https://twitter.com/share?url=#{root_url}&text=私のクロノタイプはイルカ型！あなたは何型？ %0a%0aクロノタイプチェッカーで今すぐチェック！')" 
+    },
+     class: "bg-blue-800 hover:bg-blue-900 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 text-lg" %>
 </div>
