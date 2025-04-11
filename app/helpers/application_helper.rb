@@ -20,6 +20,6 @@ module ApplicationHelper
           site: "@your_twitter_account", # あなたのTwitterアカウント名
           image: image_url("logo.png") # デフォルト画像
         }
-      }
+      }.merge(@meta_tags || {})
     end
 end
