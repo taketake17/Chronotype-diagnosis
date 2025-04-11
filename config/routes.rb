@@ -25,10 +25,10 @@ Rails.application.routes.draw do
   get "chronotype/summary/wolf"=>"chronotype#wolf"
   get "chronotype/summary/dolphin"=> "chronotype#dolphin"
 
-  post "chronotype/details/bear"=>"chronotype#details_bear"
-  post "chronotype/details/lion"=>"chronotype#details_lion"
-  post "chronotype/details/wolf"=>"chronotype#details_wolf"
-  post "chronotype/details/dolphin"=> "chronotype#details_dolphin"
+  get "chronotype/details/bear"=>"chronotype#details_bear"
+  get "chronotype/details/lion"=>"chronotype#details_lion"
+  get "chronotype/details/wolf"=>"chronotype#details_wolf"
+  get "chronotype/details/dolphin"=> "chronotype#details_dolphin"
 
   resources :calendar, only: [ :index, :create, :update, :destroy ] do
     collection do
