@@ -13,7 +13,7 @@
     method: :post, 
     form: { 
       data: { turbo: false },
-      onsubmit: "window.open('https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape('私のクロノタイプはオオカミ型！あなたは何型？%0a%0aクロノタイプチェッカーで今すぐチェック！')}')"
+      onsubmit: "window.open('https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}')"
     },
   class: "bg-gray-800 hover:bg-gray-900 active:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 text-lg" %>
 </div>

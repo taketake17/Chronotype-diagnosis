@@ -3,16 +3,16 @@ class ChronotypeController < ApplicationController
     @message = Chronotype.find(1)
     set_meta_tags og: {
         title: "イルカ型 - クロノタイプチェッカー",
-        description: "イルカ型は繊細でクリエイティブなタイプです。あなたも診断してみませんか？",
+        description: "私のクロノタイプはイルカ型！繊細でクリエイティブなタイプです。あなたのクロノタイプは何型？",
         type: "website",
-        url: request.original_url,
+        url: root_url,
         image: view_context.image_url("iruka_ogp.png")
       },
       twitter: {
         card: "summary_large_image",
         site: "@your_twitter_account",
         title: "イルカ型 - クロノタイプチェッカー",
-        description: "イルカ型は繊細でクリエイティブなタイプです。あなたも診断してみませんか？",
+        description: "私のクロノタイプはイルカ型！繊細でクリエイティブなタイプです。あなたのクロノタイプは何型？",
         image: view_context.image_url("iruka_ogp.png")
       }
     render "chronotype/summary/dolphin"
@@ -22,16 +22,16 @@ class ChronotypeController < ApplicationController
     @message = Chronotype.find(4)
     set_meta_tags og: {
         title: "オオカミ型 - クロノタイプチェッカー",
-        description: "オオカミ型は夜型でクリエイティブな生活が得意です。あなたも診断してみませんか？",
+        description: "私のクロノタイプはオオカミ型！夜型でクリエイティブな生活が得意です。あなたのクロノタイプは何型？",
         type: "website",
-        url: request.original_url,
+        url: root_url,
         image: view_context.image_url("wolf_ogp.png")
       },
       twitter: {
         card: "summary_large_image",
         site: "@your_twitter_account",
         title: "オオカミ型 - クロノタイプチェッカー",
-        description: "オオカミ型は夜型でクリエイティブな生活が得意です。あなたも診断してみませんか？",
+        description: "私のクロノタイプはオオカミ型！夜型でクリエイティブな生活が得意です。あなたのクロノタイプは何型？",
         image: view_context.image_url("wolf_ogp.png")
       }
     render "chronotype/summary/wolf"
@@ -41,16 +41,16 @@ class ChronotypeController < ApplicationController
     @message = Chronotype.find(3)
     set_meta_tags og: {
         title: "クマ型 - クロノタイプチェッカー",
-        description: "クマ型は安定した生活リズムが特徴です。あなたも診断してみませんか？",
+        description: "私のクロノタイプはクマ型！安定した生活リズムが特徴です。あなたのクロノタイプは何型？",
         type: "website",
-        url: request.original_url,
+        url: root_url,
         image: view_context.image_url("kuma_ogp.png")
       },
       twitter: {
         card: "summary_large_image",
         site: "@your_twitter_account",
         title: "クマ型 - クロノタイプチェッカー",
-        description: "クマ型は安定した生活リズムが特徴です。あなたも診断してみませんか？",
+        description: "私のクロノタイプはクマ型！安定した生活リズムが特徴です。あなたのクロノタイプは何型？",
         image: view_context.image_url("kuma_ogp.png")
       }
     render "chronotype/summary/bear"
@@ -60,16 +60,16 @@ class ChronotypeController < ApplicationController
     @message = Chronotype.find(2)
     set_meta_tags og: {
         title: "ライオン型 - クロノタイプチェッカー",
-        description: "ライオン型は朝活が得意なタイプです。あなたも診断してみませんか？",
+        description: "私のクロノタイプはライオン型！朝活が得意なタイプです。あなたのクロノタイプは何型？",
         type: "website",
-        url: request.original_url,
+        url: root_url,
         image: view_context.image_url("lion_ogp.png")
       },
       twitter: {
         card: "summary_large_image",
         site: "@your_twitter_account",
         title: "ライオン型 - クロノタイプチェッカー",
-        description: "ライオン型は朝活が得意なタイプです。あなたも診断してみませんか？",
+        description: "私のクロノタイプはライオン型！朝活が得意なタイプです。あなたのクロノタイプは何型？",
         image: view_context.image_url("lion_ogp.png")
       }
     render "chronotype/summary/lion"
