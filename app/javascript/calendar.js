@@ -4,12 +4,21 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 
 let calendar;
 let selectedInfo = null;
-
 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+// フォームの表示・非表示を切り替える関数
+function toggleFormVisibility(formId, show) {
+  const form = document.getElementById(formId);
+  if (form) {
+    form.style.display = show ? 'block' : 'none';
+  }
+}
+
+// 時間選択肢生成
 function generateTimeOptions() {
   const startTime = document.getElementById('startTime');
   const endTime = document.getElementById('endTime');
+  if (!startTime || !endTime) return;
 
   for (let i = 0; i < 24; i++) {
     for (let j = 0; j < 60; j += 30) {
@@ -20,6 +29,7 @@ function generateTimeOptions() {
   }
 }
 
+// イベント保存
 function handleSaveEvent() {
   const eventName = document.getElementById('eventName').value;
   const selectedStartTime = document.getElementById('startTime').value;
@@ -27,7 +37,6 @@ function handleSaveEvent() {
 
   if (eventName && selectedInfo) {
     let startDate, endDate;
-
     if (selectedInfo.event) {
       startDate = new Date(selectedInfo.event.start);
       endDate = new Date(selectedInfo.event.end);
@@ -38,7 +47,6 @@ function handleSaveEvent() {
 
     const [startHours, startMinutes] = selectedStartTime.split(':');
     startDate.setHours(startHours, startMinutes);
-
     const [endHours, endMinutes] = selectedEndTime.split(':');
     endDate.setHours(endHours, endMinutes);
 
@@ -54,18 +62,20 @@ function handleSaveEvent() {
       createSchedule(scheduleData);
     }
 
-    document.getElementById('eventForm').style.display = 'none';
+    toggleFormVisibility('eventForm', false); // フォームを非表示にする
     selectedInfo = null;
   } else {
     alert('予定名を入力してください');
   }
 }
 
+// 新規作成
 function createSchedule(scheduleData) {
   fetch('/calendar', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json', // 追記
       'X-CSRF-Token': token
     },
     body: JSON.stringify({ schedule: scheduleData }),
@@ -83,11 +93,13 @@ function createSchedule(scheduleData) {
     .catch(error => console.error('Error:', error));
 }
 
+// 更新
 function updateSchedule(id, scheduleData) {
   fetch(`/calendar/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json', // 追記
       'X-CSRF-Token': token
     },
     body: JSON.stringify({ schedule: scheduleData }),
@@ -102,36 +114,39 @@ function updateSchedule(id, scheduleData) {
         start: scheduleData.start_time,
         end: scheduleData.end_time
       });
+      calendar.refetchEvents();
     })
     .catch(error => console.error('Error:', error));
 }
 
+// 削除
 function deleteEvent(event) {
-  if (confirm('この予定を削除してもよろしいですか？')) {
-    fetch(`/calendar/${event.id}`, {
-      method: 'DELETE',
-      headers: {
-        'X-CSRF-Token': token
-      },
+  fetch(`/calendar/${event.id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json', // 追記
+      'X-CSRF-Token': token
+    },
+  })
+    .then(response => response.json())
+    .then(() => {
+      event.remove();
+      toggleFormVisibility('eventDetailsForm', false); // 詳細フォームを非表示にする
+      calendar.refetchEvents();
     })
-      .then(response => response.json())
-      .then(() => {
-        event.remove();
-        document.getElementById('eventDetailsForm').style.display = 'none';
-      })
-      .catch(error => console.error('Error:', error));
-  }
+    .catch(error => console.error('Error:', error));
 }
 
+// Turboページロード時
 document.addEventListener('turbo:load', function () {
   token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
   generateTimeOptions();
-
-
 
   const calendarEl = document.getElementById('calendar');
   const eventForm = document.getElementById('eventForm');
+  if (!calendarEl) return;
+
+  if (calendar) calendar.destroy();
 
   calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, timeGridPlugin],
@@ -147,24 +162,26 @@ document.addEventListener('turbo:load', function () {
     },
     select: function (info) {
       selectedInfo = info;
-      eventForm.style.display = 'block';
-      eventForm.style.left = info.jsEvent.pageX + 'px';
-      eventForm.style.top = info.jsEvent.pageY + 'px';
+
+      // フォーム表示位置を画面中央に固定
+      toggleFormVisibility('eventForm', true);
+      eventForm.style.position = 'fixed';
+      eventForm.style.left = '50%';
+      eventForm.style.top = '50%';
+      eventForm.style.transform = 'translate(-50%, -50%)';
       document.getElementById('eventName').value = '';
       document.getElementById('startTime').value = info.start.toTimeString().slice(0, 5);
       document.getElementById('endTime').value = info.end.toTimeString().slice(0, 5);
     },
     eventClick: function (info) {
       showEventDetails(info);
-      info.el.style.cursor = 'pointer';
-
+      // カーソルスタイルをリセット
       const allEvents = calendar.getEvents();
       allEvents.forEach(function (event) {
-        if (event !== info.event) {
-          const el = calendar.getEventById(event.id).el;
-          if (el) el.style.cursor = 'pointer';
-        }
+        const el = calendar.getEventById(event.id).el;
+        if (el) el.style.cursor = 'pointer';
       });
+      info.el.style.cursor = 'pointer'; // 現在のイベントにもカーソルスタイルを適用
     }
   });
 
@@ -174,10 +191,12 @@ document.addEventListener('turbo:load', function () {
 
   let detailsFormClickListener = null;
 
+  // デフォルト判定
   function isDefaultEvent(event) {
     return event.extendedProps && event.extendedProps.isDefault;
   }
 
+  // 詳細表示
   function showEventDetails(info) {
     if (info && info.event) {
       const detailsForm = document.getElementById('eventDetailsForm');
@@ -196,17 +215,10 @@ document.addEventListener('turbo:load', function () {
         deleteButton.style.display = 'inline-block';
       }
 
-      editButton.onclick = function (e) {
-        console.log('Edit button clicked'); // デバッグ用ログ
-        if (isDefaultEvent(info.event)) {
-          alert('デフォルトスケジュールは編集できません。');
-        } else {
-          console.log('Attempting to edit event:', info.event); // デバッグ用ログ
-          editEvent(info.event, info.jsEvent);
-        }
-      };
-
-      deleteButton.onclick = function () {
+      // まず既存のイベントリスナーをリセット
+      deleteButton.replaceWith(deleteButton.cloneNode(true));
+      const freshDeleteButton = document.getElementById('deleteEventButton');
+      freshDeleteButton.addEventListener('click', function () {
         if (isDefaultEvent(info.event)) {
           alert('デフォルトスケジュールは削除できません。');
         } else {
@@ -214,20 +226,32 @@ document.addEventListener('turbo:load', function () {
             deleteEvent(info.event);
           }
         }
-      };
+      });
 
-      detailsForm.style.display = 'block';
+      // 編集ボタンも同様にリセット
+      editButton.replaceWith(editButton.cloneNode(true));
+      const freshEditButton = document.getElementById('editEventButton');
+      freshEditButton.addEventListener('click', function (e) {
+        if (isDefaultEvent(info.event)) {
+          alert('デフォルトスケジュールは編集できません。');
+        } else {
+          editEvent(info.event, info.jsEvent);
+        }
+      });
+
+      toggleFormVisibility('eventDetailsForm', true);
       detailsForm.style.position = 'absolute';
-      detailsForm.style.left = info.jsEvent.pageX + 'px';
-      detailsForm.style.top = info.jsEvent.pageY + 'px';
-  
+      detailsForm.style.left = '50%'; // 画面中央に配置
+      detailsForm.style.top = '50%';  // 画面中央に配置
+      detailsForm.style.transform = 'translate(-50%, -50%)'; // 画面中央に配置
+
+      // 詳細フォーム外クリックで閉じる
       if (detailsFormClickListener) {
         document.removeEventListener('click', detailsFormClickListener);
       }
-  
-      detailsFormClickListener = function(e) {
+      detailsFormClickListener = function (e) {
         if (!detailsForm.contains(e.target)) {
-          detailsForm.style.display = 'none';
+          toggleFormVisibility('eventDetailsForm', false);
           document.removeEventListener('click', detailsFormClickListener);
           detailsFormClickListener = null;
         }
@@ -235,15 +259,15 @@ document.addEventListener('turbo:load', function () {
       setTimeout(() => {
         document.addEventListener('click', detailsFormClickListener);
       }, 0);
-  
+
       info.jsEvent.stopPropagation();
     } else {
       console.error('Event information is missing');
     }
   }
 
+  // 編集
   function editEvent(event, jsEvent) {
-    console.log('editEvent function called', event, jsEvent);
     if (isDefaultEvent(event)) {
       alert('デフォルトスケジュールは編集できません。');
       return;
@@ -256,9 +280,19 @@ document.addEventListener('turbo:load', function () {
 
     selectedInfo = { event: event };
 
-    document.getElementById('eventDetailsForm').style.display = 'none';
-    document.getElementById('eventForm').style.display = 'block';
-    document.getElementById('eventForm').style.left = jsEvent.pageX + 'px';
-    document.getElementById('eventForm').style.top = jsEvent.pageY + 'px';
+    toggleFormVisibility('eventDetailsForm', false);
+    toggleFormVisibility('eventForm', true);
+    document.getElementById('eventForm').style.position = 'absolute';
+    document.getElementById('eventForm').style.left = '50%'; // 画面中央に配置
+    document.getElementById('eventForm').style.top = '50%';  // 画面中央に配置
+    document.getElementById('eventForm').style.transform = 'translate(-50%, -50%)'; // 画面中央に配置
+  }
+});
+
+// Turboキャッシュ前にカレンダー破棄
+document.addEventListener('turbo:before-cache', function () {
+  if (calendar) {
+    calendar.destroy();
+    calendar = null;
   }
 });
