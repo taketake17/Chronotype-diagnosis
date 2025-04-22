@@ -4,7 +4,8 @@
     <%= favicon_link_tag 'favicon.png' %>
     <title><%= content_for(:title) || "クロノタイプチェッカー" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -28,8 +29,16 @@
           <%= render 'shared/before_login_header' %>
       <% end %>
     </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice.present? %>
+      <div class="mb-4 mx-auto max-w-md rounded-lg bg-blue-100 border border-blue-300 text-blue-800 px-4 py-3 shadow-md text-center animate-fade-in">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert.present? %>
+      <div class="mb-4 mx-auto max-w-md rounded-lg bg-red-100 border border-red-300 text-red-800 px-4 py-3 shadow-md text-center animate-fade-in">
+        <%= alert %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
