@@ -21,4 +21,4 @@ jobs:
           api-key: ${{ secrets.RENDER_API_KEY }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           interval: 20 # デプロイ進捗確認間隔（秒）
-          timeout: 300 # 最大待機時間（秒）
+          timeout: 500 # 最大待機時間（秒）
