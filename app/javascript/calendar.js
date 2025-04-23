@@ -92,7 +92,7 @@ function updateSchedule(id, scheduleData) {
       'Accept': 'application/json',
       'X-CSRF-Token': token
     },
-    body: JSON.stringify({ schedule: scheduleData }),
+    body: JSON.stringify({ scheduleData }),
   })
     .then(response => response.json())
     .then(() => {
@@ -223,9 +223,11 @@ document.addEventListener('turbo:load', function () {
 
   if (calendar) calendar.destroy();
 
+  let currentView = 'timeGridWeek'; // 現在の表示モードを保持
+
   calendar = new Calendar(calendarEl, {
     plugins: [interactionPlugin, timeGridPlugin],
-    initialView: 'timeGridWeek',
+    initialView: currentView, // 初期表示をcurrentViewに設定
     selectable: true,
     events: '/calendar.json',
     dateClick: function(info) {
@@ -274,6 +276,30 @@ document.addEventListener('turbo:load', function () {
     } else {
       saveEventButton.addEventListener('click', handleSaveEvent);
     }
+  }
+
+  // バツボタンでフォームを閉じる処理
+  const closeBtn = document.getElementById('closeEventForm');
+  if (closeBtn && eventForm) {
+    closeBtn.addEventListener('click', function() {
+      toggleFormVisibility('eventForm', false); // フォームを非表示にする
+    });
+  }
+
+  // 表示切り替えボタン
+  const toggleViewButton = document.getElementById('toggleViewButton');
+  if (toggleViewButton) {
+    toggleViewButton.addEventListener('click', function () {
+      if (currentView === 'timeGridWeek') {
+        calendar.changeView('timeGridDay');
+        toggleViewButton.textContent = '週表示に切り替え';
+        currentView = 'timeGridDay';
+      } else {
+        calendar.changeView('timeGridWeek');
+        toggleViewButton.textContent = '日表示に切り替え';
+        currentView = 'timeGridWeek';
+      }
+    });
   }
 });
 
