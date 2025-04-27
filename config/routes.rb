@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get "tops" =>"tops#index"
   root "tops#index"
   get "description" =>"tops#description"
+  get "terms_of_service" =>"tops#terms_of_service"
+  get "privacy_policy"=>"tops#privacy_policy"
 
 
 

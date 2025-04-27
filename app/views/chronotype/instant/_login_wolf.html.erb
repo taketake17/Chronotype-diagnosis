@@ -10,7 +10,7 @@
   <p class="text-gray-300 mb-4">詳しい内容を見たい方は・・・</p>
   <%= button_to 'Xで結果をシェア！', 
     chronotype_details_wolf_path, 
-    method: :post, 
+    method: :get, 
     form: { 
       data: { turbo: false },
       onsubmit: "window.open('https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape('私はオオカミ型！あなたのクロノタイプは何型？？ クロノタイプチェッカーで今すぐチェック！')}')"
