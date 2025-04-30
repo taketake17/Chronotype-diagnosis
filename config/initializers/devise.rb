@@ -316,6 +316,8 @@ Devise.setup do |config|
 
   config.timeout_in = 30.minutes
 
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"]
+
 
 
 
