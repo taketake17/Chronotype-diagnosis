@@ -45,6 +45,12 @@ gem "dotenv-rails"
 
 gem "meta-tags"
 
+gem "omniauth"
+
+gem "omniauth-google-oauth2"
+
+gem "omniauth-rails_csrf_protection"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
