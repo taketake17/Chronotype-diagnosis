@@ -37,6 +37,7 @@ ja:
       updated: "パスワードが正常に変更されました。ログインしてください。"
       updated_not_active: "パスワードが正常に変更されました。"
     registrations:
+      google_sign_up: "Googleで新規登録"
       destroyed: "アカウントを削除しました。ご利用ありがとうございました。"
       signed_up: "登録が完了しました。"
       signed_up_but_inactive: "登録が完了しましたが、アカウントが有効になっていないため、ログインできませんでした。"
@@ -49,6 +50,7 @@ ja:
       signed_in: "ログインしました。"
       signed_out: "ログアウトしました。"
       already_signed_out: "ログアウトしました。"
+      google_sign_in: "Googleでログイン"  
     unlocks:
       send_instructions: "アカウントのロック解除方法を数分以内に送信します。"
       send_paranoid_instructions: "アカウントが存在する場合、ロック解除方法を数分以内に送信します。"
