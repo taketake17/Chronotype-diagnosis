@@ -6,7 +6,6 @@
   日表示に切り替え
 </button>
 
-
 <form id="eventForm" class="absolute bg-white p-6 pt-8 rounded-lg shadow-md z-8 hidden w-60">
   <button
     type="button"
@@ -17,15 +16,24 @@
   <input type="text" id="eventName" class="block w-full p-2 mb-4 border border-gray-300 rounded-md" placeholder="イベント名">
   <select id="startTime" class="block w-full p-2 mb-4 border border-gray-300 rounded-md"></select>
   <select id="endTime" class="block w-full p-2 mb-4 border border-gray-300 rounded-md"></select>
+  <!-- ここにやりたいこと欄を追加 -->
+  <textarea
+    id="eventContent"
+    class="block w-full p-2 mb-4 border border-gray-300 rounded-md"
+    placeholder="やりたいこと・メモ"
+    rows="3"></textarea>
   <button id="saveEvent" class="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600">保存</button>
 </form>
-
 
 <div id="eventDetailsForm" class="absolute bg-white p-4 rounded-lg shadow-md z-10 hidden">
   <h2 id="eventDetailTitle" class="text-lg font-bold mb-2"></h2>
   <p id="eventDetailStart" class="mb-2"></p>
   <p id="eventDetailEnd" class="mb-2"></p>
+  <!-- ここにやりたいこと表示欄を追加 -->
+  <div class="mb-3">
+    <h3 class="font-semibold">やりたいこと:</h3>
+    <p id="eventDetailContent" class="mb-2 whitespace-pre-wrap"></p>
+  </div>
   <button id="editEventButton" class="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">編集</button>
   <button id="deleteEventButton" class="w-full p-2 bg-red-500 text-white rounded-md hover:bg-red-600">削除</button>
 </div>
-

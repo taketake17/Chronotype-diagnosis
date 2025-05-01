@@ -35,6 +35,7 @@ function handleSaveEvent(e) {
   const eventName = document.getElementById('eventName').value;
   const selectedStartTime = document.getElementById('startTime').value;
   const selectedEndTime = document.getElementById('endTime').value;
+  const eventContent = document.getElementById('eventContent').value; // 追加
 
   if (eventName && selectedInfo) {
     let startDate = new Date(selectedInfo.start);
@@ -49,7 +50,8 @@ function handleSaveEvent(e) {
     const scheduleData = {
       title: eventName,
       start_time: startDate.toISOString(),
-      end_time: endDate.toISOString()
+      end_time: endDate.toISOString(),
+      content: eventContent // 追加
     };
 
     if (selectedInfo.event) {
@@ -92,7 +94,7 @@ function updateSchedule(id, scheduleData) {
       'Accept': 'application/json',
       'X-CSRF-Token': token
     },
-    body: JSON.stringify({ scheduleData }),
+    body: JSON.stringify({ schedule: scheduleData }),
   })
     .then(response => response.json())
     .then(() => {
@@ -125,6 +127,12 @@ function showEventDetails(info) {
     document.getElementById('eventDetailTitle').textContent = info.event.title;
     document.getElementById('eventDetailStart').textContent = info.event.start.toLocaleString();
     document.getElementById('eventDetailEnd').textContent = info.event.end ? info.event.end.toLocaleString() : 'N/A';
+
+    // 追加：やりたいこと表示
+    const contentElement = document.getElementById('eventDetailContent');
+    if (contentElement) {
+      contentElement.textContent = info.event.extendedProps.content || '(未設定)';
+    }
 
     const editButton = document.getElementById('editEventButton');
     const deleteButton = document.getElementById('deleteEventButton');
@@ -201,6 +209,9 @@ function editEvent(event, jsEvent) {
   document.getElementById('startTime').value = startTime;
   document.getElementById('endTime').value = endTime;
 
+  // 追加：やりたいことをフォームにセット
+  document.getElementById('eventContent').value = event.extendedProps.content || '';
+
   selectedInfo = { event: event, start: event.start, end: event.end };
 
   toggleFormVisibility('eventDetailsForm', false);
@@ -244,6 +255,7 @@ document.addEventListener('turbo:load', function () {
       document.getElementById('eventName').value = '';
       document.getElementById('startTime').value = info.date.toTimeString().slice(0, 5);
       document.getElementById('endTime').value = new Date(info.date.getTime() + 30 * 60 * 1000).toTimeString().slice(0, 5);
+      document.getElementById('eventContent').value = ''; // 追加：フォーム初期化
     },
     eventClick: function(info) {
       showEventDetails(info);
