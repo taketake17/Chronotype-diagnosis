@@ -3,8 +3,9 @@ class CalendarController < ApplicationController
   before_action :check_chronotype
 
   def index
-    @user_chronotype = current_user.user_chronotype
-    @default_schedules = DefaultSchedule.where(chronotype_id: @user_chronotype.chronotype_id)
+    @user_chronotype = current_user.latest_user_chronotype
+    @default_schedules = DefaultSchedule.where(chronotype_id: current_user.latest_chronotype_id)
+
     @user_schedules = current_user.schedules
 
     start_date = params[:start].present? ? Date.parse(params[:start]) : Date.today.beginning_of_week
@@ -19,7 +20,8 @@ class CalendarController < ApplicationController
         title: s.title,
         start: s.start_time.in_time_zone("Asia/Tokyo"),
         end: s.end_time.in_time_zone("Asia/Tokyo"),
-        isDefault: false
+        isDefault: false,
+        content: s.content
       }
     end
 
@@ -58,14 +60,15 @@ class CalendarController < ApplicationController
   private
 
   def check_chronotype
-    return if current_user.chronotype_id.present?
+    return if current_user.latest_user_chronotype.present?
     return if request.path == tops_path
 
     flash[:alert] = "クロノタイプの判定を行ってください"
     redirect_to tops_path
   end
 
+
   def schedule_params
-    params.require(:schedule).permit(:title, :start_time, :end_time)
+    params.require(:schedule).permit(:title, :start_time, :end_time, :content)
   end
 end
