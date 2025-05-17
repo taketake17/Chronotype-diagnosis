@@ -1,174 +1,192 @@
-# # オオカミ型（chronotype_id: 4）のデフォルトスケジュール
-# [
-#   { title: "睡眠", start_time: '00:00', end_time: '07:00' },
-#   { title: "起床", start_time: '07:00', end_time: '07:30' },
-#   { title: "朝食", start_time: '08:00', end_time: '08:30' },
-#   { title: "コーヒー休憩", start_time: '11:00', end_time: '11:30' },
-#   { title: "昼食", start_time: '13:00', end_time: '13:30' },
-#   { title: "集中モード", start_time: '16:00', end_time: '18:00' },
-#   { title: "運動", start_time: '18:00', end_time: '19:00' },
-#   { title: "夕食", start_time: '20:00', end_time: '20:30' },
-#   { title: "就寝", start_time: '23:30', end_time: '00:00' }
-# ].each do |schedule|
-#   DefaultSchedule.create!(
-#     chronotype_id: 4,
-#     title: schedule[:title],
-#     activity_type: "オオカミ型のスケジュール",
-#     start_time: schedule[:start_time],
-#     end_time: schedule[:end_time],
-#     day_of_week: 0
-#   )
-# end
+Chronotype.create([
+    {
+        name: "イルカ型",
+        description: "イルカ型は人口の10%程度しかいない少数のクロノタイプです。他のクロノタイプと比べて眠りが浅く、短い睡眠時間で活動することができます。"
+    },
+    {
+        name: "ライオン型",
+        description: "ライオン型は人口の15~20%程度で朝型に分類されるクロノタイプです。ライオンが夜明け前から活動するのと同じように、ライオン型の人も朝早くから活動することができます。"
+    },
+    {
+        name: "クマ型",
+        description: "クマ型は人口の50%程度で多くの人が分類されるクロノタイプです。太陽の動きに合わせた生活リズムを持ち、朝から活動をすることもできます。"
+    },
+    {
+        name: "オオカミ型",
+        description: "オオカミ型は人口の15~20%程度で夜型に分類されるクロノタイプです。夜にかけて集中力が増していき、夕方が最も集中して作業をすることができます。"
+    }
+])
+# オオカミ型（chronotype_id: 4）のデフォルトスケジュール
+[
+  { title: "睡眠", start_time: '00:00', end_time: '07:00' },
+  { title: "起床", start_time: '07:00', end_time: '07:30' },
+  { title: "朝食", start_time: '08:00', end_time: '08:30' },
+  { title: "コーヒー休憩", start_time: '11:00', end_time: '11:30' },
+  { title: "昼食", start_time: '13:00', end_time: '13:30' },
+  { title: "集中モード", start_time: '16:00', end_time: '18:00' },
+  { title: "運動", start_time: '18:00', end_time: '19:00' },
+  { title: "夕食", start_time: '20:00', end_time: '20:30' },
+  { title: "就寝", start_time: '23:30', end_time: '00:00' }
+].each do |schedule|
+  DefaultSchedule.create!(
+    chronotype_id: 4,
+    title: schedule[:title],
+    activity_type: "オオカミ型のスケジュール",
+    start_time: schedule[:start_time],
+    end_time: schedule[:end_time],
+    day_of_week: 0
+  )
+end
 
-# # イルカ型（chronotype_id: 1）のデフォルトスケジュール
-# [
-#   { title: "睡眠", start_time: '00:00', end_time: '06:00' },
-#   { title: "起床", start_time: '06:00', end_time: '06:30' },
-#   { title: "運動", start_time: '06:30', end_time: '07:00' },
-#   { title: "朝食", start_time: '07:00', end_time: '07:30' },
-#   { title: "コーヒー休憩", start_time: '09:30', end_time: '10:00' },
-#   { title: "昼食", start_time: '12:00', end_time: '13:00' },
-#   { title: "集中モード", start_time: '16:00', end_time: '18:00' },
-#   { title: "夕食", start_time: '19:00', end_time: '20:00' },
-#   { title: "就寝・睡眠", start_time: '23:30', end_time: '00:00' }
-# ].each do |schedule|
-#   DefaultSchedule.create!(
-#     chronotype_id: 1,
-#     title: schedule[:title],
-#     activity_type: "イルカ型のスケジュール",
-#     start_time: schedule[:start_time],
-#     end_time: schedule[:end_time],
-#     day_of_week: 0
-#   )
-# end
+# イルカ型（chronotype_id: 1）のデフォルトスケジュール
+[
+  { title: "睡眠", start_time: '00:00', end_time: '06:00' },
+  { title: "起床", start_time: '06:00', end_time: '06:30' },
+  { title: "運動", start_time: '06:30', end_time: '07:00' },
+  { title: "朝食", start_time: '07:00', end_time: '07:30' },
+  { title: "コーヒー休憩", start_time: '09:30', end_time: '10:00' },
+  { title: "昼食", start_time: '12:00', end_time: '13:00' },
+  { title: "集中モード", start_time: '16:00', end_time: '18:00' },
+  { title: "夕食", start_time: '19:00', end_time: '20:00' },
+  { title: "就寝・睡眠", start_time: '23:30', end_time: '00:00' }
+].each do |schedule|
+  DefaultSchedule.create!(
+    chronotype_id: 1,
+    title: schedule[:title],
+    activity_type: "イルカ型のスケジュール",
+    start_time: schedule[:start_time],
+    end_time: schedule[:end_time],
+    day_of_week: 0
+  )
+end
 
-# # ライオン型（chronotype_id: 2）のデフォルトスケジュール
-# [
-#   { title: "睡眠", start_time: '00:00', end_time: '05:00' },
-#   { title: "起床", start_time: '05:00', end_time: '05:30' },
-#   { title: "朝食", start_time: '05:30', end_time: '06:00' },
-#   { title: "軽食とコーヒー休憩", start_time: '09:00', end_time: '09:30' },
-#   { title: "昼食", start_time: '12:00', end_time: '12:30' },
-#   { title: "集中モード", start_time: '13:00', end_time: '15:00' },
-#   { title: "運動", start_time: '17:00', end_time: '18:00' },
-#   { title: "夕食", start_time: '18:00', end_time: '19:00' },
-#   { title: "就寝", start_time: '22:00', end_time: '22:30' }
-# ].each do |schedule|
-#   DefaultSchedule.create!(
-#     chronotype_id: 2,
-#     title: schedule[:title],
-#     activity_type: "ライオン型のスケジュール",
-#     start_time: schedule[:start_time],
-#     end_time: schedule[:end_time],
-#     day_of_week: 0
-#   )
-# end
+# ライオン型（chronotype_id: 2）のデフォルトスケジュール
+[
+  { title: "睡眠", start_time: '00:00', end_time: '05:00' },
+  { title: "起床", start_time: '05:00', end_time: '05:30' },
+  { title: "朝食", start_time: '05:30', end_time: '06:00' },
+  { title: "軽食とコーヒー休憩", start_time: '09:00', end_time: '09:30' },
+  { title: "昼食", start_time: '12:00', end_time: '12:30' },
+  { title: "集中モード", start_time: '13:00', end_time: '15:00' },
+  { title: "運動", start_time: '17:00', end_time: '18:00' },
+  { title: "夕食", start_time: '18:00', end_time: '19:00' },
+  { title: "就寝", start_time: '22:00', end_time: '22:30' }
+].each do |schedule|
+  DefaultSchedule.create!(
+    chronotype_id: 2,
+    title: schedule[:title],
+    activity_type: "ライオン型のスケジュール",
+    start_time: schedule[:start_time],
+    end_time: schedule[:end_time],
+    day_of_week: 0
+  )
+end
 
-# # クマ型（chronotype_id: 3）のデフォルトスケジュール
-# [
-#   { title: "睡眠", start_time: '00:00', end_time: '07:00' },
-#   { title: "起床", start_time: '07:00', end_time: '07:30' },
-#   { title: "朝食", start_time: '07:30', end_time: '08:00' },
-#   { title: "コーヒー休憩", start_time: '10:00', end_time: '10:30' },
-#   { title: "昼食", start_time: '12:30', end_time: '13:00' },
-#   { title: "昼寝", start_time: '14:00', end_time: '14:30' },
-#   { title: "運動", start_time: '18:00', end_time: '19:00' },
-#   { title: "夕食", start_time: '19:30', end_time: '20:00' },
-#   { title: "就寝", start_time: '22:30', end_time: '23:00' }
-# ].each do |schedule|
-#   DefaultSchedule.create!(
-#     chronotype_id: 3,
-#     title: schedule[:title],
-#     activity_type: "クマ型のスケジュール",
-#     start_time: schedule[:start_time],
-#     end_time: schedule[:end_time],
-#     day_of_week: 0
-#   )
-# end
+# クマ型（chronotype_id: 3）のデフォルトスケジュール
+[
+  { title: "睡眠", start_time: '00:00', end_time: '07:00' },
+  { title: "起床", start_time: '07:00', end_time: '07:30' },
+  { title: "朝食", start_time: '07:30', end_time: '08:00' },
+  { title: "コーヒー休憩", start_time: '10:00', end_time: '10:30' },
+  { title: "昼食", start_time: '12:30', end_time: '13:00' },
+  { title: "昼寝", start_time: '14:00', end_time: '14:30' },
+  { title: "運動", start_time: '18:00', end_time: '19:00' },
+  { title: "夕食", start_time: '19:30', end_time: '20:00' },
+  { title: "就寝", start_time: '22:30', end_time: '23:00' }
+].each do |schedule|
+  DefaultSchedule.create!(
+    chronotype_id: 3,
+    title: schedule[:title],
+    activity_type: "クマ型のスケジュール",
+    start_time: schedule[:start_time],
+    end_time: schedule[:end_time],
+    day_of_week: 0
+  )
+end
 
-# Question.create([
-#     {
-#         question_text: "Q1.ささいな音や光で目を覚ましたり、眠れなくなってしまうことがある。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q2.食べ物に対してこだわりや関心は全くない。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q3.目覚ましが鳴る前に起きることが多い。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q4.耳栓やアイマスクをしても、飛行機や新幹線の中で寝ることができない。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q5.疲れるとイライラすることが多い。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q6.細いことが気になり過ぎてしまうことがある。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q7.医師の診断かもしくは自己診断で不眠症の結果が出たことがある。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q8.学校に通っていた頃、成績のことが心配で仕方がなかった。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q9.私は完璧主義である。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     },
-#     {
-#         question_text: "Q10.過去の出来事や将来のことを考え込み過ぎて眠れなくなることがよくある。",
-#         option1: "YES",
-#         option2: "NO",
-#         score1: 1,
-#         score2: 0,
-#         part: 1
-#     }
+Question.create([
+    {
+        question_text: "Q1.ささいな音や光で目を覚ましたり、眠れなくなってしまうことがある。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q2.食べ物に対してこだわりや関心は全くない。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q3.目覚ましが鳴る前に起きることが多い。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q4.耳栓やアイマスクをしても、飛行機や新幹線の中で寝ることができない。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q5.疲れるとイライラすることが多い。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q6.細いことが気になり過ぎてしまうことがある。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q7.医師の診断かもしくは自己診断で不眠症の結果が出たことがある。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q8.学校に通っていた頃、成績のことが心配で仕方がなかった。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q9.私は完璧主義である。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    },
+    {
+        question_text: "Q10.過去の出来事や将来のことを考え込み過ぎて眠れなくなることがよくある。",
+        option1: "YES",
+        option2: "NO",
+        score1: 1,
+        score2: 0,
+        part: 1
+    }
 
-# ])
+])
 
 Question.create([
   {
