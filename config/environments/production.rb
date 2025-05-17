@@ -2,6 +2,8 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.hosts << "chronotype-checker.com"      # 独自ドメイン 
+  config.hosts << "www.chronotype-checker.com"  # サブドメイン
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
   address: "smtp.gmail.com",
