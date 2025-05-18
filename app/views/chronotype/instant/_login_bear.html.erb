@@ -13,7 +13,7 @@
     method: :get, 
     form: { 
       data: { turbo: false },
-      onsubmit: "window.open('https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape('私はクマ型！あなたのクロノタイプは何型？？ クロノタイプチェッカーで今すぐチェック！')}')"
+      onsubmit: "window.open('https://twitter.com/intent/tweet?url=#{CGI.escape(request.original_url)}&text=#{CGI.escape('私はクマ型！あなたのクロノタイプは何型？？ クロノタイプチェッカーで今すぐチェック！#クロノタイプチェッカー')}')"
     },
     class: "bg-green-800 hover:bg-green-900 active:bg-green-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition duration-300 text-lg" %>
 </div>
