@@ -57,7 +57,7 @@
 <br>
 
 ## ER図
-<img width="713" alt="image" src="e6968f923667a5f2cc173396cdeab754.png">
+<img width="713" alt="image" src="er.png">
 <br>
 
 ## 本サービスを作成するにあたって参考にした文献 
